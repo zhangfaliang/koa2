@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " node ./server/server.js"
+    "start": " node ./server/server.js",
+    "hello": " node ./server/hello.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "koa-static": "^4.0.2"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "koa-send": "^4.1.3"
   }
 }

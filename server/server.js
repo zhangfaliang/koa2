@@ -10,6 +10,9 @@ app.use(require('koa-static')('root',{
   //setHeaders Function to set custom headers on response.
   //extensions Try to match extensions from passed array to search for file when no extension is sufficed in URL. First found is served. (defaults to false)
 }))
+app.use(ctx=>{
+  ctx.body = 'Hello Body'
+})
 
 app.listen(3000);
 
