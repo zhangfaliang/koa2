@@ -1,0 +1,27 @@
+{
+  "name": "koa2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " node ./server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangfaliang/koa2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhangfaliang/koa2/issues"
+  },
+  "homepage": "https://github.com/zhangfaliang/koa2#readme",
+  "dependencies": {
+    "koa-static": "^4.0.2"
+  },
+  "devDependencies": {
+    "koa-send": "^4.1.3"
+  }
+}
