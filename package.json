@@ -20,10 +20,15 @@
   },
   "homepage": "https://github.com/zhangfaliang/koa2#readme",
   "dependencies": {
-    "koa-static": "^4.0.2"
+    "koa-proxies": "^0.6.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
+    "koa2-cors": "^2.0.5"
   },
   "devDependencies": {
     "babel-register": "^6.26.0",
-    "koa-send": "^4.1.3"
+    "kick-off-koa": "^2.0.0",
+    "koa-send": "^4.1.3",
+    "koa2-proxy": "^1.1.7"
   }
 }

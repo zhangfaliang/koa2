@@ -1,14 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script
+  src="http://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
 </head>
 <body>
-  <div>
-    hell koa
-  </div>
+    <input type="text" class="add" value=9 >
+    <input type="text" class="add"  value=4 >
+    <input type="text" class="add"  value=6 >
+    <input type="text" class="add"  value=7 >
 </body>
+  <script>
+      for(i=0;i<$('.add').length;i++){
+        console.log($('.add')[i].value)
+      }
+   
+  </script>
 </html>
+
+
