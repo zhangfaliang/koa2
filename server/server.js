@@ -1,9 +1,10 @@
 const Koa = require('koa');
 const app = new Koa();
 var cors = require('koa2-cors');
-const Router = require('koa-router')
-let router = new Router();
-app.use(require('koa-static')('dist',{
+//const Router = require('koa-router')
+const proxy = require('koa-proxies')
+// let router = new Router();
+app.use(require('koa-static')('root',{
   maxage:0,// Browser cache max-age in milliseconds. defaults to 0
   hidden:false,// Allow transfer of hidden files. defaults to false
   index:'index.html',// Default file name, defaults to 'index.html'
@@ -13,25 +14,16 @@ app.use(require('koa-static')('dist',{
   //setHeaders Function to set custom headers on response.
   //extensions Try to match extensions from passed to search for file when no extension is sufficed in URL. First found is served. (defaults to false)
 }))
-app.use(cors());//
-router.get('/url', async ( ctx )=>{
-  let html = `
-    <ul>
-      <li><a href="/page/helloworld">/page/helloworld</a></li>
-      <li><a href="/page/404">/page/404</a></li>
-    </ul>
-  `
-  ctx.body = html
-})
+// app.use(cors());//
 app.use(proxy('/api', {
-  target: 'http://qa.m.8win.com',    
+  target: 'https://m.8win.com',    
   changeOrigin: true,
   // agent: new httpsProxyAgent('http://1.2.3.4:88'),
   rewrite: path => path.replace(/\/api/, ''),
   logs: true
 }))
-app.use(router.routes())
-.use(router.allowedMethods());
+// app.use(router.routes())
+// .use(router.allowedMethods());
 app.listen(3000);
 
 console.log('listening on port 3000');

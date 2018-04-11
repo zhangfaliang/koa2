@@ -1,27 +1,154 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script
-  src="http://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>${name}</title>
+    <style>
+        body,ul,form{margin:0;padding:0;}dl,dd,h1,h2,h3,h4,h5,p,hr{margin:0;}
+        body{font-family:"Helvetica Neue",Helvetica,STHeiTi,sans-serif;line-height:1.5;font-size:14px;color:#333;background-color:#f0f0f0;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-webkit-overflow-scrolling:touch;}h1,h2,h3,h4,h5{font-weight:400}table{border-collapse:collapse;border-spacing:0}img,hr{border:0}li{list-style:none}input,textarea{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;outline:0}a{-webkit-touch-callout:none;text-decoration:none;}:focus{outline:0;}em,i{font-style:normal}b{font-weight:normal}
+        a{color:#333}em{color:#D41E23}::-webkit-input-placeholder{color:#bbb}
+        h1{font-size:.36rem}h2{font-size:.34rem}h3,h4,.f16{font-size:.32rem}h5,.f14{font-size:.28rem;}.f12{font-size:.24rem}.f10{font-size:.20rem}.f8{font-size:.16rem}
+        /* 公共页面样式 */
+        body{max-width:6.4rem;margin:0 auto;}
+    </style>
+    <script>
+        (function(b,a){function c(){d=100*Math.min(e.getBoundingClientRect().width,a.maxWidth)/a.desinWidth;e.style.fontSize=d+"px"}var e=b.document.documentElement,d=100,f;a.desinWidth=640;a.maxWidth=640;a.init=function(){b.addEventListener("resize",function(){clearTimeout(f);f=setTimeout(c,300)},!1);c()}})(window,window.adaptive||(window.adaptive={}));adaptive.init();
+    </script>
+    <script type="text/javascript" src="//yun.tuisnake.com/h5-mami/log.js?hash=002"  id="send_log"></script>
+    <script type="text/javascript" src="//lib.baomitu.com/zepto/1.2.0/zepto.min.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top:0;
+            bottom:0;
+            left: 0;
+            bottom:0;
+        }
+        .click_area{
+            content:'';
+            position:absolute;
+            width:100%;
+            height: 3.6rem;
+            z-index: 10;
+            bottom:0;
+        }
+        .inner{
+            width: 100%;
+            position: relative
+        }
+        .inner img{ display: block; width: 100%; max-width: 100%; }
+    </style>
 </head>
 <body>
-    <input type="text" class="add" value=9 >
-    <input type="text" class="add"  value=4 >
-    <input type="text" class="add"  value=6 >
-    <input type="text" class="add"  value=7 >
+<div class="wrapper">
+    <div class="inner">
+        <img src="${bannerUrl}">
+        <div class = 'click_area' id='click_area'></div>
+    </div>
+</div>
+
+<script>
+    //弹层 http://layer.layui.com/mobile/
+    !function(a){"use strict";var b=document,c="querySelectorAll",d="getElementsByClassName",e=function(a){return b[c](a)},f={type:0,shade:!0,shadeClose:!0,fixed:!0,anim:!0},g={extend:function(a){var b=JSON.parse(JSON.stringify(f));for(var c in a)b[c]=a[c];return b},timer:{},end:{}};g.touch=function(a,b){var c;return/Android|iPhone|SymbianOS|Windows Phone|iPad|iPod/.test(navigator.userAgent)?(a.addEventListener("touchmove",function(){c=!0},!1),void a.addEventListener("touchend",function(a){a.preventDefault(),c||b.call(this,a),c=!1},!1)):a.addEventListener("click",function(a){b.call(this,a)},!1)};var h=0,i=["layermbox"],j=function(a){var b=this;b.config=g.extend(a),b.view()};j.prototype.view=function(){var a=this,c=a.config,f=b.createElement("div");a.id=f.id=i[0]+h,f.setAttribute("class",i[0]+" "+i[0]+(c.type||0)),f.setAttribute("index",h);var g=function(){var a="object"==typeof c.title;return c.title?'<h3 style="'+(a?c.title[1]:"")+'">'+(a?c.title[0]:c.title)+'</h3><button class="layermend"></button>':""}(),j=function(){var a,b=(c.btn||[]).length;return 0!==b&&c.btn?(a='<span type="1">'+c.btn[0]+"</span>",2===b&&(a='<span type="0">'+c.btn[1]+"</span>"+a),'<div class="layermbtn">'+a+"</div>"):""}();if(c.fixed||(c.top=c.hasOwnProperty("top")?c.top:100,c.style=c.style||"",c.style+=" top:"+(b.body.scrollTop+c.top)+"px"),2===c.type&&(c.content='<i></i><i class="laymloadtwo"></i><i></i>'),f.innerHTML=(c.shade?"<div "+("string"==typeof c.shade?'style="'+c.shade+'"':"")+' class="laymshade"></div>':"")+'<div class="layermmain" '+(c.fixed?"":'style="position:static;"')+'><div class="section"><div class="layermchild '+(c.className?c.className:"")+" "+(c.type||c.shade?"":"layermborder ")+(c.anim?"layermanim":"")+'" '+(c.style?'style="'+c.style+'"':"")+">"+g+'<div class="layermcont">'+c.content+"</div>"+j+"</div></div></div>",!c.type||2===c.type){var k=b[d](i[0]+c.type),l=k.length;l>=1&&layer.close(k[0].getAttribute("index"))}document.body.appendChild(f);var m=a.elem=e("#"+a.id)[0];c.success&&c.success(m),a.index=h++,a.action(c,m)},j.prototype.action=function(a,b){var c=this;if(a.time&&(g.timer[c.index]=setTimeout(function(){layer.close(c.index)},1e3*a.time)),a.title){var e=b[d]("layermend")[0],f=function(){a.cancel&&a.cancel(),layer.close(c.index)};g.touch(e,f)}var h=function(){var b=this.getAttribute("type");0==b?(a.no&&a.no(),layer.close(c.index)):a.yes?a.yes(c.index):layer.close(c.index)};if(a.btn)for(var i=b[d]("layermbtn")[0].children,j=i.length,k=0;j>k;k++)g.touch(i[k],h);if(a.shade&&a.shadeClose){var l=b[d]("laymshade")[0];g.touch(l,function(){layer.close(c.index,a.end)})}a.end&&(g.end[c.index]=a.end)},a.layer={v:"1.7",index:h,open:function(a){var b=new j(a||{});return b.index},close:function(a){var c=e("#"+i[0]+a)[0];c&&(c.innerHTML="",b.body.removeChild(c),clearTimeout(g.timer[a]),delete g.timer[a],"function"==typeof g.end[a]&&g.end[a](),delete g.end[a])},closeAll:function(){for(var a=b[d](i[0]),c=0,e=a.length;e>c;c++)layer.close(0|a[0].getAttribute("index"))}}}(window);
+    var t = 0, UA = navigator.userAgent,appUrl,dlUrl,system;
+    var  isQa = 1;
+    if (UA.match(/(iPhone|iPod|iPad);?/i)) {
+        system='ios';
+        //appUrl = 'ZYlottery://';
+    } else if (UA.match(/android/i)) {
+        system='android';
+        //appUrl = 'zylottery://';
+    }
+    $(function () {
+        $.ajax({
+            url:'https://m.8win.com/command/execute',
+            typr:'POST',
+            data:'message=' + encodeURIComponent(JSON.stringify({ 
+                    'command': '120121',
+                    code:0,
+                    message:'ok',
+                    clinentInfo:{
+                        "product":'01',
+                        "channel":'1504'
+                    },
+                    nonce : new Date().getTime().toString()
+                    })),
+            contentType:'application/x-www-form-urlencoded',
+            headers:{
+                Origin: "https://m.8win.com"
+            },
+            success:function(data){
+                console.log(data)
+            }
+        })
+
+        var theRequest = GetRequest();
+
+        function download() {
+            location = appUrl;
+            //layer.open({type: 2,time:5});
+            var queryArr = [];
+            var href = 'https://m.8win.com/app/dl/apk';
+            for(var attr in theRequest){
+                if (theRequest.hasOwnProperty(attr)) {
+                    queryArr.push(attr + '=' + encodeURIComponent(theRequest[attr]))
+                }
+            }
+            if(queryArr.length){
+                href += '?' + queryArr.join('&');
+            }
+            if (system == "android") {
+                window.location.href = href;
+            } else if (system == "ios") {
+                window.location.href = "https://itunes.apple.com/cn/app/zhang-yu-cai-piao/id848995746?ls=1&mt=8";
+            }
+        }
+
+        $('#click_area').on('click',function(){
+            if(!!window.countLog) {
+                countLog.init(function() {
+                    download();
+                }, {
+                    location: "dl1"
+                })
+            }else{
+                download();
+            }
+        });
+
+
+        //获取url参数
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = {};
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for(var i = 0; i < strs.length; i ++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+    });
+    //百度统计
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?25a0f6c142145843e35338d891968b04";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 </body>
-  <script>
-      for(i=0;i<$('.add').length;i++){
-        console.log($('.add')[i].value)
-      }
-   
-  </script>
 </html>
-
-
