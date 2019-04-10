@@ -18,7 +18,7 @@ app.use( async ( ctx ) => {
   //"keep=1&categor=1&zy-action=%7B%22showTitle%22:1,%22titleName%22:%22%E7%8B%97%E7%8B%97%E5%90%91%E5%89%8D%E5%86%B2%22%7D&url=http%3A%2F%2Fgogogo.joyboat6.cn%2Fzycp%2Ftest%2Findex.html&portal="
  //keep=1&url=http%3A%2F%2Fqa.m.8win.com%2Ff%2Fsanguo%3Fportal%3D2005&portal=&zy-action=%7B%22titleName%22%3A%22%E4%B8%89%E5%9B%BD%22%2C%22showTitle%22%3A1%7D
   ctx.body = {
-    url:'http://192.168.0.238:3000/redirect-test?keep=1&categor=1&zy-action=%7B%22showTitle%22:1,%22titleName%22:%22%E7%8B%97%E7%8B%97%E5%90%91%E5%89%8D%E5%86%B2%22%7D&url=http%3A%2F%2Fgogogo.joyboat6.cn%2Fzycp%2Ftest%2Findex.html&portal=',
+    url:'http://192.168.0.153:3000/redirect?keep=1&url=http%3A%2F%2Fqa.m.8win.com%2Ff%2Fsanguo%3Fportal%3D2005&portal=&zy-action=%7B%22titleName%22%3A%22%E4%B8%89%E5%9B%BD%22%2C%22showTitle%22%3A1%7D'
   }
 })
 
