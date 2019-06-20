@@ -6,55 +6,63 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const proxy = require("koa-proxies");
 const { get } = require("lodash");
-const reptileUrl =
-  "https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_4388_-_ctg1_4388&openA";
+const fs = require('fs')
+const reptileUrl ="https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_1988_-_ctg1_1988&openApp=0"
+// const reptileUrl ="https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_4388_-_ctg1_4388&openApp=0";
+const prot = 9000;
 
-const prot = 5000;
-
-const apiPromise = () => {
+const apiPromise = (since_id) => {
   return new Promise((res, rej) => {
     axios
       .get(reptileUrl)
-      .then(function(response) {
+      .then(function (response) {
         res(response);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         rej(error);
       })
-      .then(function() {
+      .then(function () {
         // always executed
       });
   });
 };
 
+
 app.use(async ctx => {
-  let url = ctx.url;
-  // 从上下文的request对象中获取
-  let request = ctx.request;
-  let req_query = request.query;
-  let req_querystring = request.querystring;
-  // 从上下文中直接获取
-  let ctx_query = ctx.query;
-  let ctx_querystring = ctx.querystring;
-  const data = await apiPromise();
-  const processData = get(data, "data.data.cards", []).map(item => {
-    const mblog = get(item, "mblog", {});
-    const { thumbnail_pic, bmiddle_pic, original_pic, text } = mblog;
-    let texts = [],
-      reg = /[^A-z|0-9|=|>|<|\-|\；|\:|\"|\\|/|.|;|\?|%|&]+/g;
-    let res = true;
-    while (res) {
-      res = get(reg.exec(text), "0");
-      res && texts.push(res);
+
+  const datas = []
+  datas.push(await apiPromise(1))
+
+  const processData = datas.map((data) => {
+    return get(data, "data.data.cards", []).map(item => {
+      const mblog = get(item, "mblog", {});
+      const { thumbnail_pic, bmiddle_pic, original_pic, text } = mblog;
+      let texts = [],
+        reg = /[^A-z|0-9|=|>|<|\-|\；|\:|\"|\\|/|.|;|\? |+, +|,|\?|\.|\&|\%]+/g;
+      let res = true;
+      while (res) {
+        res = get(reg.exec(text), "0");
+        res && texts.push(res);
+      }
+      return {
+        text: text,
+        thumbnail_pic,
+        bmiddle_pic,
+        original_pic,
+        title: texts.join(',')
+      };
+    });
+
+  })
+
+  fs.writeFile('app.json', JSON.stringify(processData).replace(/\[|\]/img, '').replace(/\},/img, '}'), 'utf-8', (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('文件已被保存');
     }
-    return {
-      text: text,
-      thumbnail_pic,
-      bmiddle_pic,
-      original_pic,
-      texts
-    };
-  });
+
+  })
   ctx.body = {
     url: processData
   };
