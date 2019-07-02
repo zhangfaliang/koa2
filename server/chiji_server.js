@@ -1,16 +1,12 @@
 const Koa = require("koa");
 const app = new Koa();
-var cors = require("koa2-cors");
-const superagent = require("superagent");
-const cheerio = require("cheerio");
 const axios = require("axios");
 const proxy = require("koa-proxies");
-const { get } = require("lodash");
+const { get, isEmpty, isArray } = require("lodash");
 const fs = require("fs");
-// const reptileUrl ="https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_1988_-_ctg1_1988&openApp=0"
 const reptileUrl =
   "https://m.weibo.cn/api/container/getIndex?uid=6100410734&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%90%83%E9%B8%A1%E8%A7%86%E9%A2%91&sudaref=m.weibo.cn&display=0&retcode=6102&type=uid&value=6100410734&containerid=1076036100410734";
-const port = 6000;
+const port = 4000;
 
 const apiPromise = since_id => {
   return new Promise((res, rej) => {
@@ -31,11 +27,17 @@ const apiPromise = since_id => {
 app.use(async ctx => {
   const datas = [];
   datas.push(await apiPromise(1));
-
-  const processData = datas.map(data => {
-    return get(data, "data.data.cards", []).map(item => {
+  const processDatas = datas.map(data => {
+    return get(data, "data.data.cards", []).filter(item => {
       const mblog = get(item, "mblog", {});
-      const { thumbnail_pic, bmiddle_pic, original_pic, text, pics } = mblog;
+      const { page_info } = mblog;
+      return !isEmpty(get(page_info, "media_info"));
+    });
+  });
+  const processData = processDatas.map(data => {
+    return data.map(item => {
+      const { mblog } = item;
+      const { text, page_info } = mblog;
       let texts = [],
         reg = /[^A-z|0-9|=|>|<|\-|\；|\:|\"|\\|/|.|;|\? |+, +|,|\?|\.|\&|\%]+/g;
       let res = true;
@@ -43,20 +45,31 @@ app.use(async ctx => {
         res = get(reg.exec(text), "0");
         res && texts.push(res);
       }
+      const media_info = get(page_info, "media_info", {});
+      const { page_pic, type } = page_info;
+      const {
+        stream_url,
+        stream_url_hd,
+        mp4_sd_url,
+        mp4_hd_url,
+        video_details
+      } = media_info;
       return {
-        text: text,
-        thumbnail_pic,
-        bmiddle_pic,
-        original_pic,
+        // text: text,
         title: texts.join(","),
-
-        pics
+        stream_url,
+        stream_url_hd,
+        mp4_sd_url,
+        mp4_hd_url,
+        page_pic:get(page_pic,'url'),
+        type
+        // video_details,
       };
     });
   });
   //false}}}]}
   fs.writeFile(
-    "app.json",
+    "chiji.json",
     JSON.stringify(processData)
       .replace(/\[|\]/gim, "")
       .replace(/\"pics\":/gim, '"pics":[')
