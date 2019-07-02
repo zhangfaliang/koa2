@@ -9,8 +9,8 @@ const { get } = require("lodash");
 const fs = require("fs");
 // const reptileUrl ="https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_1988_-_ctg1_1988&openApp=0"
 const reptileUrl =
-  "https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_4388_-_ctg1_4388&openApp=1&since_id=9";
-const prot = 5000;
+  "https://m.weibo.cn/api/container/getIndex?uid=6100410734&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%90%83%E9%B8%A1%E8%A7%86%E9%A2%91&sudaref=m.weibo.cn&display=0&retcode=6102&type=uid&value=6100410734&containerid=1076036100410734";
+const port = 6000;
 
 const apiPromise = since_id => {
   return new Promise((res, rej) => {
@@ -54,14 +54,14 @@ app.use(async ctx => {
       };
     });
   });
-  //false}}}]} 
+  //false}}}]}
   fs.writeFile(
     "app.json",
     JSON.stringify(processData)
       .replace(/\[|\]/gim, "")
       .replace(/\"pics\":/gim, '"pics":[')
-      .replace(/false\}\}\}\}/gim, 'false}}}]}')
-      .replace(/true\}\}\}\}/gim, 'true}}}]}')
+      .replace(/false\}\}\}\}/gim, "false}}}]}")
+      .replace(/true\}\}\}\}/gim, "true}}}]}")
       .replace(/\},/gim, "}")
       .replace(/\}\"large\"/gim, '},"large"')
       .replace(/\}\}\}\{\"pid\"/gim, '}}},{"pid"'),
@@ -78,6 +78,6 @@ app.use(async ctx => {
     url: processData
   };
 });
-app.listen(prot, () => {
-  console.log(`[demo] request get is starting at  ${prot}`);
+app.listen(port, () => {
+  console.log(`[demo] request get is starting at  ${port}`);
 });

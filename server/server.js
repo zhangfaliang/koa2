@@ -28,7 +28,7 @@ app.use(
 // app.use(cors());//
 app.use(
   proxy("/api", {
-    target: "http://qa-i18n-h5-game.8win.com",
+    target: "https://qa-i18n-h5-game.8win.com",
     changeOrigin: true,
     // agent: new httpsProxyAgent('http://1.2.3.4:88'),
     //rewrite: path => path.replace(/\/api/, ''),
@@ -42,7 +42,7 @@ app.use(
 // app.use(router.routes())
 // .use(router.allowedMethods());
 // app.listen(9088);
-
+console.log(process.env.PORT ,'process.env.PORT ')
 https.createServer(options, app.callback()).listen(process.env.PORT || 4000);
 console.log("listening on port 9000");
 
