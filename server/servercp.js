@@ -9,7 +9,7 @@ const { get } = require("lodash");
 const fs = require("fs");
 // const reptileUrl ="https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_1988_-_ctg1_1988&openApp=0"
 const reptileUrl =
-  "https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_4388_-_ctg1_4388&openApp=1&since_id=9";
+  "https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_4388_-_ctg1_4388&openApp=0";
 const prot = 5000;
 
 const apiPromise = since_id => {
@@ -49,7 +49,6 @@ app.use(async ctx => {
         bmiddle_pic,
         original_pic,
         title: texts.join(","),
-
         pics
       };
     });
