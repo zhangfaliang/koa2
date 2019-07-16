@@ -83,5 +83,5 @@ app.use(async ctx => {
 });
 
 app.listen(port, () => {
-  console.log(`[demo] request get is starting at  ${prot}`);
+  console.log(`[demo] request get is starting at  ${port}`);
 });
