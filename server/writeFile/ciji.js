@@ -16,7 +16,9 @@ var processRes = data => {
                 retweeted_status,
 
             } = mblog;
+            console.log(retweeted_status)
             if (retweeted_status) {
+               
                 // 图片展示
                 const {
                     pics,
