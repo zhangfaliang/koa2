@@ -7,10 +7,14 @@ const axios = require("axios");
 const proxy = require("koa-proxies");
 const { get } = require("lodash");
 const fs = require("fs");
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
 // const reptileUrl ="https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_1988_-_ctg1_1988&openApp=0"
 const reptileUrl =
   "https://m.weibo.cn/api/container/getIndex?containerid=102803_ctg1_4388_-_ctg1_4388&openApp=0";
-const prot = 5000;
 
 const apiPromise = since_id => {
   return new Promise((res, rej) => {
@@ -77,6 +81,7 @@ app.use(async ctx => {
     url: processData
   };
 });
-app.listen(prot, () => {
+
+app.listen(port, () => {
   console.log(`[demo] request get is starting at  ${prot}`);
 });
