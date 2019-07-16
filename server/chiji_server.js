@@ -5,7 +5,7 @@ const proxy = require("koa-proxies");
 const { get, isEmpty, isArray } = require("lodash");
 const fs = require("fs");
 const reptileUrl =
-  "https://m.weibo.cn/api/container/getIndex?uid=6100410734&luicode=10000011&lfid=100103type%3D1%26q%3D%E5%90%83%E9%B8%A1%E8%A7%86%E9%A2%91&sudaref=m.weibo.cn&display=0&retcode=6102&type=uid&value=6100410734&containerid=1076036100410734";
+  "https://m.weibo.cn/api/container/getIndex?uid=5529945701&luicode=10000011&lfid=100103type%3D64%26q%3D%E5%88%BA%E6%BF%80%E6%88%98%E5%9C%BA%26t%3D0&type=uid&value=5529945701&containerid=10760355299457";
 const port = 4000;
 
 const apiPromise = since_id => {
