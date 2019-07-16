@@ -13,12 +13,16 @@ var processRes = data => {
             let {
                 text,
                 page_info,
-                retweeted_status
+                retweeted_status,
+
             } = mblog;
             if (retweeted_status) {
                 // 图片展示
                 const {
-                    pics
+                    pics,
+                    thumbnail_pic,
+                    bmiddle_pic,
+                    original_pic,
                 } = retweeted_status;
                 let texts = [],
                     reg = /[^A-z|0-9|=|>|<|\-|\；|\:|\"|\\|/|.|;|\? |+, +|,|\?|\.|\&|\%]+/g;
@@ -29,9 +33,12 @@ var processRes = data => {
                 }
                 return {
                     isPic: true,
+                    thumbnail_pic,
+                    bmiddle_pic,
+                    original_pic,
                     title: texts.join(","),
                     pics,
-                   
+
                 };
 
             } else if (page_info) {
@@ -87,7 +94,9 @@ fs.writeFile(
     .replace(/true\}\}\}\}/gim, 'true}}}]}')
     .replace(/\},/gim, "}")
     .replace(/\}\"large\"/gim, '},"large"')
-    .replace(/\}\}\}\{\"pid\"/gim, '}}},{"pid"'),
+    .replace(/\}\}\}\{\"pid\"/gim, '}}},{"pid"')
+    .replace(/',|#,/gim, "")
+    .replace(/null,/gim, ''),
     "utf-8",
     err => {
         if (err) {
