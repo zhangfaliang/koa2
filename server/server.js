@@ -1,18 +1,19 @@
 const Koa = require("koa");
 const fs = require("fs");
 var path = require("path");
-const https = require("https");
+//const https = require("https");
+const http = require("http");
 // const enforceHttps = require('koa-sslify');
 
-var options = {
-  key: fs.readFileSync(path.resolve("server/ssl/server.key")),
-  cert: fs.readFileSync(path.resolve("server/ssl/server.crt"))
-};
+// var options = {
+//   key: fs.readFileSync(path.resolve("server/ssl/server.key")),
+//   cert: fs.readFileSync(path.resolve("server/ssl/server.crt"))
+// };
 const app = new Koa();
 var cors = require("koa2-cors");
-//const Router = require('koa-router')
+const Router = require("koa-router");
 const proxy = require("koa-proxies");
-// let router = new Router();
+let router = new Router();
 app.use(
   require("koa-static")("dist", {
     //maxage:0,// Browser cache max-age in milliseconds. defaults to 0
@@ -39,10 +40,9 @@ app.use(
   })
 );
 
-// app.use(router.routes())
-// .use(router.allowedMethods());
-// app.listen(9088);
-console.log(process.env.PORT ,'process.env.PORT ')
-https.createServer(options, app.callback()).listen(process.env.PORT || 4000);
-console.log("listening on port 9000");
+app.use(router.routes()).use(router.allowedMethods());
+app.listen(9088);
 
+// console.log(process.env.PORT ,'process.env.PORT ')
+// http.createServer(options, app.callback()).listen(process.env.PORT || 4000);
+// console.log("listening on port 9000");
