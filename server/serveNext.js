@@ -1,49 +1,282 @@
 const Koa = require("koa");
-const fs = require("fs");
 var path = require("path");
-const https = require("https");
-const http = require("http");
-const enforceHttps = require("koa-sslify");
-
-// var options = {
-//   key: fs.readFileSync(path.resolve("server/ssl/server.key"), "utf8"),
-//   cert: fs.readFileSync(path.resolve("server/ssl/server.cert"), "utf8"),
-// };
 const app = new Koa();
 var cors = require("koa2-cors");
 const Router = require("koa-router");
 const proxy = require("koa-proxies");
 let router = new Router();
+
+const dataSource = {
+  columns: [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Tags",
+      key: "tags",
+      dataIndex: "tags",
+    },
+    {
+      title: "Action",
+      key: "action",
+    },
+  ],
+  list: [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"],
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+      tags: ["loser"],
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+    {
+      key: "4",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+    {
+      key: "5",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+  ],
+};
+const dataSource1 = {
+  columns: [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Tags",
+      key: "tags",
+      dataIndex: "tags",
+    },
+    {
+      title: "Action",
+      key: "action",
+    },
+  ],
+  list: [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"],
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+      tags: ["loser"],
+    },
+  ],
+};
+
+const dataSource2 = {
+  columns: [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Tags",
+      key: "tags",
+      dataIndex: "tags",
+    },
+    {
+      title: "Action",
+      key: "action",
+    },
+  ],
+  list: [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"],
+    },
+  ],
+};
+const dataSource3 = {
+  columns: [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Tags",
+      key: "tags",
+      dataIndex: "tags",
+    },
+    {
+      title: "Action",
+      key: "action",
+    },
+  ],
+  list: [
+    {
+      key: "0",
+      name: "John Brown0",
+      age: 32,
+      address: "New York No. 1 Lake Park0",
+      tags: ["nice", "developer"],
+    },
+    {
+      key: "9",
+      name: "John Brown 9",
+      age: 32,
+      address: "New York No. 1 Lake Park9",
+      tags: ["nice", "developer"],
+    },
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"],
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+      tags: ["loser"],
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+    {
+      key: "4",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+    {
+      key: "5",
+      name: "Joe Black",
+      age: 32,
+      address: "Sidney No. 1 Lake Park",
+      tags: ["cool", "teacher"],
+    },
+  ],
+};
 app.use(
   require("koa-static")("dist", {
-    //maxage:0,// Browser cache max-age in milliseconds. defaults to 0
-    //hidden:false,// Allow transfer of hidden files. defaults to false
     index: "index.html", // Default file name, defaults to 'index.html'
-    //defer:true If true, serves after return next(), allowing any downstream middleware to respond first.
-    // gzip:true,// Try to serve the gzipped version of a file automatically when gzip is supported by a client and if the requested file with .gz extension exists. defaults to true.
-    // br:true,// Try to serve the brotli version of a file automatically when brotli is supported by a client and if the requested file with .br extension exists (note, that brotli is only accepted over https). defaults to true.
-    //setHeaders Function to set custom headers on response.
-    //extensions Try to match extensions from passed to search for file when no extension is sufficed in URL. First found is served. (defaults to false)
   })
 );
-app.use(cors()); //
-// app.use(
-//   proxy("/api", {
-//     target: "https://m.test.doublefs.com",
-//     changeOrigin: true,
-//     // agent: new httpsProxyAgent('http://1.2.3.4:88'),
-//     //rewrite: path => path.replace(/\/api/, ''),
-//     pathRewrite: {
-//       // '^/api': '',
-//     },
-//     logs: true,
-//   })
-// );
-app.use(async (ctx) => {
-  console.log(decodeURIComponent(ctx.req.headers.cookie));
-  const isWebp = ctx.req.headers.accept?.includes("image/webp");
-  ctx.body = "Hello World " + isWebp;
+app.use(cors());
+router.get("/", (ctx, next) => {
+  console.log(ctx.query);
+  const select = ctx?.query?.Select;
+  switch (select) {
+    case "demo":
+      ctx.body = JSON.stringify(dataSource);
+      break;
+    case "demo1":
+      ctx.body = JSON.stringify(dataSource2);
+      break;
+    case "demo2":
+      ctx.body = JSON.stringify(dataSource1);
+      break;
+    default:
+      ctx.body = JSON.stringify(dataSource3);
+  }
+  return next();
 });
+router.get("/select", (ctx, next) => {
+  console.log(ctx);
+  ctx.body = JSON.stringify([
+    {
+      value: "demo",
+      text: "Demo",
+    },
+    {
+      value: "demo1",
+      text: "Demo1",
+    },
+    {
+      value: "demo2",
+      text: "Demo3",
+    },
+  ]);
+  return next();
+});
+// app.use(async (ctx) => {
+//   ctx.body = JSON.stringify(dataSource);
+// });
 
 // app.listen(9088);
 app.use(router.routes()).use(router.allowedMethods());
