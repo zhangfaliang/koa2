@@ -27,28 +27,27 @@ app.use(
   })
 );
 app.use(cors()); //
-app.use(
-  proxy("/", {
-    target: "https://m.test.doublefs.com",
-    changeOrigin: true,
-    // agent: new httpsProxyAgent('http://1.2.3.4:88'),
-    //rewrite: path => path.replace(/\/api/, ''),
-    pathRewrite: {
-      // '^/api': '',
-    },
-    logs: true,
-  })
-);
+// app.use(
+//   proxy("/api", {
+//     target: "https://m.test.doublefs.com",
+//     changeOrigin: true,
+//     // agent: new httpsProxyAgent('http://1.2.3.4:88'),
+//     //rewrite: path => path.replace(/\/api/, ''),
+//     pathRewrite: {
+//       // '^/api': '',
+//     },
+//     logs: true,
+//   })
+// );
 app.use(async (ctx) => {
-  console.log(ctx.req.headers.cookie);
-  // console.log(ctx.req);
-
-  ctx.body = "Hello World";
+  console.log(decodeURIComponent(ctx.req.headers.cookie));
+  const isWebp = ctx.req.headers.accept?.includes("image/webp");
+  ctx.body = "Hello World " + isWebp;
 });
 
 // app.listen(9088);
 app.use(router.routes()).use(router.allowedMethods());
-app.listen(9088);
+app.listen(8989);
 
 // https.createServer(options, app.callback()).listen(9088, () => {
 //   console.log(`应用实例，访问地址为 https://localhost:9088`);

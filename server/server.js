@@ -40,7 +40,9 @@ app.use(cors()); //
 //   })
 // );
 app.use(async (ctx) => {
-  console.log(ctx.req.headers.cookie);
+  const isWebp = req.headers.accept?.includes("image/webp");
+  console.log(isWebp, "isWebpisWebpisWebp");
+
   // console.log(ctx.req);
 
   ctx.body = "Hello World";

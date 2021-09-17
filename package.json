@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": " node ./server/server.js",
+    "startNext": " node ./server/serveNext.js",
     "start:cp": " node ./server/servercp.js",
+    "startTest": " node ./dist/server/pages/index.js",
     "start:cj": " node ./server/chiji_server.js",
     "start:express": " node ./server/express.server.js",
     "hello": " node ./server/hello.js"
@@ -23,11 +25,13 @@
   },
   "homepage": "https://github.com/zhangfaliang/koa2#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.3",
     "koa": "^2.7.0",
     "koa-proxies": "^0.6.2",
     "koa-router": "^7.4.0",
+    "koa-sslify": "^5.0.0",
     "koa-static": "^4.0.2",
     "koa2-cors": "^2.0.5",
     "lodash": "^4.17.11",
