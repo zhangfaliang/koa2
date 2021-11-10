@@ -9,3 +9,5 @@ new Queue()
   .task(2000, () => console.log(2))
   .task(3000, () => console.log(3))
   .start();
+
+//深copy
