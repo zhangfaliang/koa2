@@ -5,6 +5,7 @@ var cors = require("koa2-cors");
 const Router = require("koa-router");
 const proxy = require("koa-proxies");
 let router = new Router();
+const fetch = require("fetch");
 
 const dataSource = {
   columns: [
@@ -232,16 +233,24 @@ const dataSource3 = {
     },
   ],
 };
-app.use(cors({
-  origin: function(ctx) {
-    return '*';
-  },
-  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-  maxAge: 5,
-  credentials: true,
-  allowMethods: ['GET', 'POST', 'DELETE'],
-  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-}));
+const dataSource4 = {
+  code: 0,
+  msg: "success",
+  data: { testFE: { groupKey: "B", groupParam: "" } },
+  success: true,
+};
+app.use(
+  cors({
+    origin: function (ctx) {
+      return "*";
+    },
+    exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ["GET", "POST", "DELETE"],
+    allowHeaders: ["Content-Type", "Authorization", "Accept"],
+  })
+);
 app.use(
   require("koa-static")("dist", {
     index: "index.html", // Default file name, defaults to 'index.html'
@@ -330,183 +339,312 @@ router.get("/api/v1/queryProductColorInfo", (ctx, next) => {
   });
   return next();
 });
+router.get("/api/v1/queryProductColorInfo", (ctx, next) => {
+  console.log(ctx);
+  ctx.body = JSON.stringify(dataSource4);
+  return next();
+});
 
-
-router.get("/me/api/pay-result", (ctx, next) => {
+router.get("/api/v1/mallCmsConfig/index", (ctx, next) => {
   console.log(ctx);
   console.log(ctx.query);
   const orderNo = ctx?.query?.orderNo;
   const data = {
     code: 0,
-    data: {
-        orderDetail: {
-            billingAddress: {
-                addressLineOne: '16840 E Maplewood Ave',
-                addressLineTwo: '',
-                city: 'Centennial',
-                country: 'United States',
-                firstName: 'Hannah',
-                id: 736587,
-                iso: 'US',
-                lastName: 'Sims',
-                phoneNumber: '+17202401781',
-                postCode: '80016',
-                province: 'Colorado',
+    msg: "success",
+    data: [
+      {
+        type: "slideshow",
+        floorMark: "1111",
+        style: "",
+        layoutType: "",
+        flashSale: 2,
+        position: 1,
+        data: {
+          title: "banner标题",
+          urlType: null,
+          url: "",
+          data: [
+            {
+              img: "https://mpi.halaracdn.com/update/test/25/14/03/12/21/_5969971475.jpg?width=1200&height=960",
+              urlType: 1,
+              url: "/collections/skc-sortby-lm",
+              title: null,
+              desc: null,
+              btn: null,
+              largeImg:
+                "https://mpi.halaracdn.com/update/test/30/11/03/12/21/_3769975517.jpg?width=2700&height=900",
+              text: null,
+              type: "",
+              pc: null,
+              mobile: null,
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "banner1",
             },
-            buttons: [
-                {
-                    alertMsg: '',
-                    enable: true,
-                    key: 'Cancel',
-                    text: 'Cancel',
-                },
-                { enable: true, key: 'Edit Address', text: 'Edit Address' },
-            ],
-            order: {
-                costPrice: '49.40',
-                currency: 'USD',
-                discountedPrice: '0.00',
-                displayCurrency: 'USD',
-                displayCurrencySign: '$',
-                displayDiscountedPrice: '0.00',
-                displayGoodsPrice: '49.40',
-                displayLinePrice: '61.40',
-                displayPayPrice: '49.40',
-                displayShippingPrice: '0.00',
-                displayTotalPrice: '49.40',
-                email: 'Hannah.rsims8@gmail.com',
-                ifFreeShipping: false,
-                orderName: '210802025807297988',
-                orderNo: orderNo,
-                orderTime: 'Aug 02, 2021',
-                releasePrice: '49.40',
-                shippingFee: '0.00',
-                sign: '$',
-                status: 'Confirmed',
-                totalLinePrice: '61.40',
-                virtualOrderNo: '210802025542739',
-                activityLabelList: {
-                    '8': '团购',
-                },
-                activityOrderNo: 'wr34534543',
-                open: 1, // 1 开团 0 加团
+            {
+              img: "https://mpi.halaracdn.com/update/test/25/14/03/12/21/_6784496228.jpg?width=1200&height=960",
+              urlType: 1,
+              url: "/collections/sports-bra",
+              title: null,
+              desc: null,
+              btn: null,
+              largeImg:
+                "https://mpi.halaracdn.com/update/test/26/14/03/12/21/_7167574521.jpg?width=1350&height=900",
+              text: null,
+              type: "",
+              pc: null,
+              mobile: null,
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "banner2",
             },
-            products: [
-                {
-                    color: 'Black',
-                    costPrice: '1.45',
-                    currency: 'USD',
-                    discounted: false,
-                    discountedPrice: '0.00',
-                    displayCurrency: 'USD',
-                    displayCurrencySign: '$',
-                    displayDiscountedPrice: '0.00',
-                    displayDividePrice: '1.45',
-                    displayGoodsPrice: '1.45',
-                    displayLinePrice: '1.45',
-                    displayPayPrice: '1.45',
-                    dividePrice: '1.45',
-                    giveaway: false,
-                    ifChange: false,
-                    ifFreeGoods: false,
-                    img:
-                        'https://mpi.halaracdn.com/c7f00f8e-d935-4f5e-83c8-1adae1153ee8_10_158607_1669805.png',
-                    linePrice: '1.45',
-                    payPrice: '1.45',
-                    preSaleTimeLong: 0,
-                    preSaleTips: '',
-                    quantity: 1,
-                    releasePrice: '1.45',
-                    resourceId: 1105217,
-                    returnAndExchange: false,
-                    searchKey: 'default-158607',
-                    selected: true,
-                    shopifySkuId: '37501568680102',
-                    shopifySpuId: '6060413616294',
-                    showLinePrice: false,
-                    sign: '$',
-                    size: 'One Size',
-                    skcId: 1669805,
-                    skuCode: 'WsHairAcc-NP4JF-SX010704-46-OS',
-                    spuId: 158607,
-                    title: 'Solid-Color Scrunchie',
-                },
-                {
-                    activityName: '20% OFF',
-                    color: 'Midnight Adventure - Black',
-                    costPrice: '47.95',
-                    currency: 'USD',
-                    discounted: false,
-                    discountedPrice: '0.00',
-                    displayCurrency: 'USD',
-                    displayCurrencySign: '$',
-                    displayDiscountedPrice: '0.00',
-                    displayDividePrice: '47.95',
-                    displayGoodsPrice: '47.95',
-                    displayLinePrice: '59.95',
-                    displayPayPrice: '47.95',
-                    dividePrice: '47.95',
-                    giveaway: false,
-                    ifChange: false,
-                    ifFreeGoods: false,
-                    img:
-                        'https://mpi.halaracdn.com/7fb529e6-a138-45da-bba3-c2fffa26cd39_10_160857_1675044.png',
-                    linePrice: '59.95',
-                    payPrice: '47.95',
-                    preSaleTimeLong: 0,
-                    preSaleTips: 'Hurry! Selling Out Fast!',
-                    quantity: 1,
-                    releasePrice: '47.95',
-                    resourceId: 1126250,
-                    returnAndExchange: true,
-                    searchKey: 'default-160857',
-                    selected: true,
-                    shopifySkuId: '39957607448742',
-                    shopifySpuId: '6737358094502',
-                    showLinePrice: true,
-                    sign: '$',
-                    size: '2X',
-                    skcId: 1675044,
-                    skuCode: 'WpOnePic-GCTH5-TC2000045-46-2X',
-                    spuId: 160857,
-                    title: 'In My Feels Everyday Dress-Wannabe',
-                },
-            ],
-            shippingAddress: {
-                addressLineOne: '16840 E Maplewood Ave',
-                addressLineTwo: '',
-                city: 'Centennial',
-                country: 'United States',
-                firstName: 'Hannah',
-                id: 736586,
-                iso: 'US',
-                lastName: 'Sims',
-                phoneNumber: '+17202401781',
-                postCode: '80016',
-                province: 'Colorado',
-            },
-            showFlagInfo: { showFlagType: 2 },
-            splitPackage: false,
+          ],
         },
-        payInfo: {
-            msg: '',
-            orderNo: '210802025807wer43534297988',
-            payFinishTime: 1627873089000,
-            payStatus: 'PROCESS',
-            // PROCESS PAY_FAILED PAID
-            payTime: '2021-08-02 02:58:09',
-            tradeNo: '21080202580100000225',
-            payMethodCode: 'klarna',
+      },
+      {
+        type: "category",
+        floorMark: "shopshow",
+        style: "",
+        layoutType: "",
+        flashSale: 1,
+        position: 2,
+        data: {
+          title: null,
+          urlType: null,
+          url: "",
+          data: [
+            {
+              img: null,
+              urlType: null,
+              url: "",
+              title: null,
+              desc: null,
+              btn: null,
+              largeImg: null,
+              text: null,
+              type: "",
+              pc: null,
+              mobile: {
+                rank: "2",
+                pageRow: 1,
+                data: [
+                  {
+                    img: "https://mpi.halaracdn.com/update/test/28/14/03/12/21/_4153872751.jpg?width=1350&height=900",
+                    urlType: 1,
+                    url: "/collections/20211120-test",
+                    floorMark: "catgreay1",
+                  },
+                  {
+                    img: "https://mpi.halaracdn.com/update/test/29/14/03/12/21/_6960525422.jpg?width=1350&height=900",
+                    urlType: 1,
+                    url: "/collections/Shorts",
+                    floorMark: "catgreay2",
+                  },
+                ],
+              },
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "",
+            },
+          ],
         },
-    },
-    msg: 'success',
+      },
+      {
+        type: "category",
+        floorMark: "category11111",
+        style: "",
+        layoutType: "",
+        flashSale: 1,
+        position: 3,
+        data: {
+          title: "category",
+          urlType: null,
+          url: "",
+          data: [
+            {
+              img: null,
+              urlType: null,
+              url: "",
+              title: null,
+              desc: null,
+              btn: null,
+              largeImg: null,
+              text: null,
+              type: "",
+              pc: null,
+              mobile: {
+                rank: "2",
+                pageRow: 1,
+                data: [
+                  {
+                    img: "https://mpi.halaracdn.com/update/test/42/15/02/12/21/_1921716936.jpg?width=750&height=870",
+                    urlType: 1,
+                    url: "/collections/skc-sortby-lm",
+                    floorMark: "category222",
+                  },
+                  {
+                    img: "https://mpi.halaracdn.com/update/test/42/15/02/12/21/_3800059988.jpg?width=750&height=870",
+                    urlType: 1,
+                    url: "/collections/NewUserGifts",
+                    floorMark: "category333333",
+                  },
+                ],
+              },
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "",
+            },
+          ],
+        },
+      },
+      {
+        type: "MainDisplayBox",
+        floorMark: "",
+        style: "",
+        layoutType: "",
+        flashSale: 2,
+        position: 4,
+        data: {
+          title: "故事模块",
+          urlType: null,
+          url: "",
+          data: [
+            {
+              img: "https://mpi.halaracdn.com/update/test/44/15/02/12/21/_0226913126.jpg?width=342&height=342",
+              urlType: 1,
+              url: "/collections/eredfs",
+              title: "故事模块",
+              desc: null,
+              btn: null,
+              largeImg: null,
+              text: null,
+              type: "",
+              pc: null,
+              mobile: null,
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "history",
+            },
+          ],
+        },
+      },
+      {
+        type: "hList",
+        floorMark: "",
+        style: "",
+        layoutType: "horizontal",
+        flashSale: 2,
+        position: 5,
+        data: {
+          title: "hlist标题",
+          urlType: null,
+          url: "",
+          data: [
+            {
+              img: null,
+              urlType: 1,
+              url: "activity-collection-2030",
+              title: "hlist",
+              desc: null,
+              btn: null,
+              largeImg: null,
+              text: null,
+              type: "",
+              pc: null,
+              mobile: null,
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "hlist",
+            },
+          ],
+        },
+      },
+      {
+        type: "MainType",
+        floorMark: "minType",
+        style: "",
+        layoutType: "",
+        flashSale: 2,
+        position: 6,
+        data: {
+          title: null,
+          urlType: null,
+          url: "",
+          data: [
+            {
+              img: "https://mpi.halaracdn.com/update/test/24/14/03/12/21/_0335572249.jpg?width=1200&height=960",
+              urlType: 1,
+              url: "/collections/test-buy-more",
+              title: "这是标题",
+              desc: null,
+              btn: "More",
+              largeImg: null,
+              text: null,
+              type: "",
+              pc: null,
+              mobile: null,
+              flashSaleBeginDate: null,
+              flashSaleEndDate: null,
+              floorMark: "mintype",
+            },
+          ],
+        },
+      },
+      {
+        type: "seo",
+        floorMark: null,
+        style: "",
+        layoutType: null,
+        flashSale: null,
+        position: 10000,
+        data: {
+          title: "",
+          urlType: null,
+          url: "",
+          data: [
+            {
+              keyWord: "22222",
+              seoTitle: "index-halara",
+              seoDesc: "index-halara",
+            },
+          ],
+        },
+      },
+      {
+        data: {
+          testFE: {
+            groupKey: "B",
+            groupParam: "",
+          },
+        },
+        type: "abTest",
+      },
+      {
+        data: [
+          "token = werwerwer; path=/;   Expires=Wed, 07-Dec-2023 11:52:20 GMT; domain=dev.doublefs.com; httponly",
+          "device-id = werwerwer; path=/;   Expires=Wed, 07-Dec-2023 11:52:20 GMT; domain=dev.doublefs.com; httponly",
+          "device-idw = werwerwer; path=/;   Expires=Wed, 07-Dec-2023 11:52:20 GMT; domain=dev.doublefs.com; httponly; samesite=none; secure",
+          "token1 = werwerwer; path=/;   Expires=Wed, 07-Dec-2023 11:52:20 GMT; domain=dev.doublefs.com; httponly",
+        ],
+        type: "cookies",
+      },
+    ],
     success: true,
-  }
-  ctx.body = JSON.stringify(data);
+  };
+  ctx.cookies.set("testAB--TEST", "hello world", {
+    domain: ".doublefs.com", // 写cookie所在的域名
+    path: "/", // 写cookie所在的路径
+    maxAge: 10 * 60 * 1000, // cookie有效时长
+    expires: new Date("2087-02-15"), // cookie失效时间
+    httpOnly: true, // 是否只用于http请求中获取
+    overwrite: false, // 是否允许重写
+    // secure: false,
+    // sameSite: "none",
+  });
+  ctx.body = data; //JSON.stringify(data);
   return next();
 });
-
-
 
 // app.use(async (ctx) => {
 //   ctx.body = JSON.stringify(dataSource);
